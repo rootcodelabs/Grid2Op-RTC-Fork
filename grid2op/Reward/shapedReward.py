@@ -8,13 +8,15 @@ class ShapedReward(BaseReward):
     """
     This reward is based on the cumulative sum of all overflowing line loads, which the agent aims to minimize.
     
-    we first calculate the coefficient u, which summarizes the (overflowing) line loads.
-    If Rho_max < 1,i.e, there is currently no overflow, and line loads of all lines are within the allowed bounds, u is
-    calculated as
+    This rewards is computed as followed:
+    - We first calculate the coefficient u, which summarizes the (overflowing) line loads.
+    - If rho_max <= 1,i.e, there is currently no overflow, and line loads of all lines are within the allowed bounds, u is
+    calculated as;
     
-        u = max(Rho_max-0.5, 0) ( If Rho_max - 0.5 is positive or zero, it will return Rho_max - 0.5, else it will return 0.)
+        u = max(rho_max-0.5, 0) 
+     If rho_max - 0.5 is positive or zero, it will return Rho_max - 0.5, else it will return 0.)
     
-    If Rho_max > 1,  u is calculated as
+    - If rho_max > 1,  u is calculated as;
     
         u = sum of (rho_i - 0.5) for each i in the range [1, n] where rho_i > 1, n is the number of power lines in the grid
         
@@ -25,6 +27,23 @@ class ShapedReward(BaseReward):
         
     n_offline is the number of lines which are currently offline as a result of an overflow or agent’s actions (i.e.,
     we do not consider lines that are offline because of maintenance or opponent attacks)
+
+    Examples
+    ---------
+    You can use this reward in any environment with:
+
+    .. code-block:: python
+
+        import grid2op
+        from grid2op.Reward import ShapedReward
+
+        # then you create your environment with it:
+        NAME_OF_THE_ENVIRONMENT = "l2rpn_case14_sandbox"
+        env = grid2op.make(NAME_OF_THE_ENVIRONMENT,reward_class=ShapedReward)
+        # and do a step with a "do nothing" action
+        obs = env.reset()
+        obs, reward, done, info = env.step(env.action_space())
+        # the reward is computed with the ShapedReward class
         
     """
     def __init__(self, logger=None):
