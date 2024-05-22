@@ -8,25 +8,28 @@ class ShapedReward(BaseReward):
     """
     This reward is based on the cumulative sum of all overflowing line loads, which the agent aims to minimize.
     
-    This rewards is computed as followed:
+    This rewards is computed as followed:  
+
     - We first calculate the coefficient u, which summarizes the (overflowing) line loads.
-    - If rho_max <= 1,i.e, there is currently no overflow, and line loads of all lines are within the allowed bounds, u is
-    calculated as;
     
-        u = max(rho_max-0.5, 0) 
-     If rho_max - 0.5 is positive or zero, it will return Rho_max - 0.5, else it will return 0.)
-    
-    - If rho_max > 1,  u is calculated as;
-    
-        u = sum of (rho_i - 0.5) for each i in the range [1, n] where rho_i > 1, n is the number of power lines in the grid
-        
+    - If rho_max < 1,i.e, there is currently no overflow, and line loads of all lines are within the allowed bounds, u is
+    calculated as:
+
+          u = max(rho_max - 0.5, 0) ; where rho_max is the maximum overflow value in the grid
+
+      (If rho_max - 0.5 is positive or zero, it will return :math:rho_max - 0.5`, else it will return 0.)
+
+    - If  rho_max > 1, u is calculated as:
+
+          u = sum(rho_i - 0.5) for each i in [1, n] and rho_i > 1 ; where  `n` is the number of power lines in the grid.
+
     Then, utilizing u calculated above, we take into account offline lines and apply exponential decay to obtain
-    the shaped reward r as
-        
-        r =exp(-u - 0.5*n_offline)
-        
-    n_offline is the number of lines which are currently offline as a result of an overflow or agent’s actions (i.e.,
-    we do not consider lines that are offline because of maintenance or opponent attacks)
+    the shaped reward r as:
+
+        r = exp(-u - 0.5^n_offline)
+
+    where n_offline is the number of lines which are currently offline as a result of an overflow or agent’s actions (i.e.,
+    we do not consider lines that are offline because of maintenance or opponent attacks).
 
     Examples
     ---------
