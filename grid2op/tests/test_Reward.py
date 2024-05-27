@@ -18,7 +18,8 @@ from grid2op.Reward import *
 from grid2op.Parameters import Parameters
 from grid2op.Runner import Runner
 from grid2op.Agent import BaseAgent
-
+print("shaped")
+from grid2op.Reward.shapedReward import ShapedReward
 import warnings
 
 
@@ -88,6 +89,10 @@ class TestLoadingL2RPNSandBoxScore(TestLoadingReward, unittest.TestCase):
 class TestLoadingLinesCapacityReward(TestLoadingReward, unittest.TestCase):
     def _reward_type(self):
         return LinesCapacityReward
+    
+class TestLoadingShapedReward(TestLoadingReward, unittest.TestCase):
+    def _reward_type(self):
+        return ShapedReward
 
 
 class TestDistanceReward(TestLoadingReward, unittest.TestCase):
