@@ -49,7 +49,6 @@ extensions = [
 
     # 'details',
     #'exception_hierarchy',
-
     # for pdf
     # 'rst2pdf.pdfbuilder',
     'sphinx.ext.mathjax'

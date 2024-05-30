@@ -18,7 +18,6 @@ from grid2op.Reward import *
 from grid2op.Parameters import Parameters
 from grid2op.Runner import Runner
 from grid2op.Agent import BaseAgent
-print("shaped")
 from grid2op.Reward.shapedReward import ShapedReward
 import warnings
 
