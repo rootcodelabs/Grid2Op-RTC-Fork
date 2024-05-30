@@ -31,7 +31,7 @@ Change Log
 - [???] "asynch" multienv
 - [???] properly model interconnecting powerlines
 
-[1.10.2] - 2024-xx-yy
+[1.10.2] - 2024-05-27
 -------------------------
 - [BREAKING] the `runner.run_one_episode` now returns an extra first argument: 
   `chron_id, chron_name, cum_reward, timestep, max_ts = runner.run_one_episode()` which 
@@ -39,6 +39,9 @@ Change Log
   `chron_name, cum_reward, timestep, max_ts = runner.run_one_episode()`)
 - [BREAKING] the runner now has no `chronics_handler` attribute (`runner.chronics_handler` 
   is not defined)
+- [BREAKING] now grid2op forces everything to be connected at busbar 1 if
+  `param.IGNORE_INITIAL_STATE_TIME_SERIE == True` (**NOT** the default) and
+  no initial state is provided in `env.reset(..., options={"init state": ...})`
 - [ADDED] it is now possible to call `change_reward` directly from 
   an observation (no need to do it from the Observation Space)
 - [ADDED] method to change the reward from the observation (observation_space
@@ -52,6 +55,14 @@ Change Log
   and `FromChronix2grid` are not supported at the moment.
 - [ADDED] an "Handler" (`JSONInitStateHandler`) that can set the grid to an initial state (so as to make
   compatible the `FromHandlers` time series class with this new feature)
+- [ADDED] some more type hints in the `GridObject` class 
+- [ADDED] Possibility to deactive the support of shunts if subclassing `PandaPowerBackend`
+  (and add some basic tests)
+- [ADDED] a parameters (`param.IGNORE_INITIAL_STATE_TIME_SERIE`) which defaults to
+  `False` that tells the environment whether it should ignore the 
+  initial state of the grid provided in the time series.
+  By default it is NOT ignored, it is taken into account 
+  (for the environment that supports this feature)
 - [FIXED] a small issue that could lead to having 
   "redispatching_unit_commitment_availble" flag set even if the redispatching
   data was not loaded correctly
@@ -68,6 +79,8 @@ Change Log
   and most of the time incorrectly)
 - [FIXED] on `RemoteEnv` class (impact all multi process environment): the kwargs used to build then backend
   where not used which could lead to"wrong" backends being used in the sub processes.
+- [FIXED] a bug when the name of the times series and the names of the elements in the backend were 
+  different: it was not possible to set `names_chronics_to_grid` correctly when calling `env.make`
 - [IMPROVED] documentation about `obs.simulate` to make it clearer the 
   difference between env.step and obs.simulate on some cases
 - [IMPROVED] type hints on some methods of `GridObjects`
@@ -79,6 +92,8 @@ Change Log
 - [IMPROVED] the way the "grid2op compat" mode is handled
 - [IMPROVED] the coverage of the tests in the "test_basic_env_ls.py" to test more in depth lightsim2grid
   (creation of multiple environments, grid2op compatibility mode)
+- [IMPROVED] the function to test the backend interface in case when shunts are not supported 
+  (improved test `AAATestBackendAPI.test_01load_grid`)
 
 [1.10.1] - 2024-03-xx
 ----------------------
