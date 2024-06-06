@@ -49,9 +49,9 @@ extensions = [
 
     # 'details',
     #'exception_hierarchy',
-
     # for pdf
-    # 'rst2pdf.pdfbuilder'
+    # 'rst2pdf.pdfbuilder',
+    'sphinx.ext.mathjax'
 ]
 # Add any paths that contain templates here, relative to this directory.
 templates_path = [] #'_templates']
