@@ -18,6 +18,7 @@ __all__ = [
     "EpisodeDurationReward",
     "AlarmReward",
     "N1Reward",
+    # TODO it would be better to have a specific package for this, but in the mean time i put it here
     "ShapedReward",
     "L2RPNSandBoxScore",
     "L2RPNWCCI2022ScoreFun",
