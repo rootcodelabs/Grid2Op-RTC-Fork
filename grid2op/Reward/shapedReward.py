@@ -21,14 +21,12 @@ class ShapedReward(BaseReward):
 
     - If  rho_max > 1, u is calculated as:
 
-          u =  Σ (rho_i - 0.5) for each i in [1, n] and rho_i > 1 ; where  `n` is the number of power lines in the grid.
+          u =  Σ (rho_i - 0.5) for each i in [1, n] and rho_i > 1 ; where  `n` is the number of power lines in the grid and Σ denotes summation.
 
-    Then, utilizing u calculated above, we take into account offline lines and apply exponential decay to obtain
-    the shaped reward r as:
+    Then, utilizing u calculated above, we take into account offline lines and apply exponential decay to obtain the shaped reward r as:
 
-        r = e\ :sup:`(-u - 0.5.n_offline)`
-
-    where n_offline is the number of lines which are currently offline as a result of an overflow or agent’s actions (i.e.,
+        r = exp(-u - 0.5*n_offline) ; 
+        where n_offline is the number of lines which are currently offline as a result of an overflow or agent’s actions (i.e.,
     we do not consider lines that are offline because of maintenance or opponent attacks).
 
     Examples
