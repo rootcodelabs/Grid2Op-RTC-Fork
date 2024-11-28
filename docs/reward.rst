@@ -86,6 +86,7 @@ At time of writing the available reward functions is :
 - :class:`LinesReconnectedReward`
 - :class:`N1Reward`
 - :class:`RedispReward`
+- :class:`ShapedReward`
 
 In the provided reward you have also some convenience functions to combine different reward. These are:
 
